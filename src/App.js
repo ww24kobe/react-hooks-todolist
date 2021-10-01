@@ -24,6 +24,7 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState('All');
+  const [age, setAge] = useState('100');
 
   function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map(task => {
@@ -38,6 +39,10 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
+  function changeAge() {
+    setAge(200)
+    console.log(age); // 之前的100，合成事件中（onClick）是异步的
+  }
 
   function deleteTask(id) {
     const remainingTasks = tasks.filter(task => id !== task.id);
@@ -100,12 +105,13 @@ function App(props) {
 
   return (
     <div className="todoapp stack-large">
+      <button style={{color:"red",border:"3px solid #ccc"}} onClick={changeAge}>updateAge</button>
       <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">
         {filterList}
       </div>
       <h2 id="list-heading" tabIndex="-1" ref={listHeadingRef}>
-        {headingText}
+        {headingText} --- age: {age}
       </h2>
       <ul
         role="list"
